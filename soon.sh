@@ -1,24 +1,26 @@
 #!/bin/bash
 
+PROJ_NAME=$1
+
 # hello
-echo "SOON"
+echo "SOON: $1"
 
 # name
-echo "Enter project name: "
-read projname
+#echo "Enter project name: "
+#read PROJ_NAME
 
 # directory
-mkdir $projname
-cd $projname
+mkdir $PROJ_NAME
+cd $PROJ_NAME
 
 # gemset
-. rvm gemset create $projname
-. rvm gemset use $projname
-echo "rvm gemset use $projname" > .rvmrc
+. rvm gemset create $PROJ_NAME
+. rvm gemset use $PROJ_NAME
+echo "rvm gemset use $PROJ_NAME" > .rvmrc
 
 # rails
 gem install rails
-rails new ../$projname --skip-test-unit
+rails new ../$PROJ_NAME --skip-test-unit
 
 # specs
 echo "
@@ -39,7 +41,7 @@ rails g rspec:install
 echo "silence_warnings do
   require 'pry'
   IRB = Pry
-end >> config/environments/development.rb
+end" >> config/environments/development.rb
 
 # git
 git init
@@ -48,4 +50,4 @@ git commit -am 'first commit'
 git log
 
 # bye
-echo "Project $projname created!"
+echo "Project $PROJ_NAME created!"
